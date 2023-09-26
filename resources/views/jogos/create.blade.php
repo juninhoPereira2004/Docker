@@ -4,7 +4,6 @@
 
 @section('content')
 
-        
 <div class="container mt-5">
   <h1>Crie um novo jogo</h1>
   <hr>
@@ -13,8 +12,8 @@
   @csrf
     <div class="form-group">
       <div class="form-group">
-        <label for="nome">Nome</label>
-        <input type="text" class="form-control" name="nome" placeholder="Digite um Nome de Jogo...">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" name="nome" placeholder="Digite um Nome de Jogo...">
       </div>
 
       <br>
@@ -41,10 +40,20 @@
       <br>
 
       <div class="form-group">
-        <input type="submit" name="submit" class="btn btn-primary" value="Criar" onclick="return confirm('Criado com Sucesso')">
+        <input type="submit" name="submit" class="btn btn-primary" value="Criar" >
       </div>
     </div>
   </form>
+
+  @if(Session::has('message'))
+      <script>
+        swal("Message","{{ Session::POST('message') }}", 'sucess', {
+          input:true,
+          input:"ok",
+        })
+      </script>
+  @endif
 </div>
        
 @endsection
+
