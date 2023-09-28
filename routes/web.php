@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
     Route::post('/destroy', [JogosController::class, 'destroy'])->where('id', '[0-9]+')->name('jogos-destroy');
 
     });
-
     Route::fallback(function(){
         return redirect('/jogos');
     });

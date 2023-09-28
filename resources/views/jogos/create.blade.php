@@ -8,7 +8,7 @@
   <h1>Crie um novo jogo</h1>
   <hr>
   <br>
-  <form action="{{ route('jogos-store') }}" method="POST">
+  <form id="meuFormulario" action="{{ route('jogos-store') }}" method="POST">
   @csrf
     <div class="form-group">
       <div class="form-group">
@@ -45,12 +45,28 @@
     </div>
   </form>
 
-  @if(Session::has('message'))
+  <script>
+    document.getElementById("meuFormulario").addEventListener("submit", function (event) {
+        var nomeCampo = document.querySelector("input[name='nome']").value;
+        var categoriaCampo = document.querySelector("input[name='categoria']").value;
+        var anoCriacaoCampo = document.querySelector("input[name='ano_criacao']").value;
+        var valorCampo = document.querySelector("input[name='valor']").value;
+
+        if (nomeCampo.trim() === "" || categoriaCampo.trim() === "" || anoCriacaoCampo.trim() === "" || valorCampo.trim() === "") {
+            event.preventDefault();
+            alert("Todos os campos devem ser preenchidos.");
+        }
+    });
+</script>
+
+  @if(Session::has('error'))
       <script>
-        swal("Message","{{ Session::POST('message') }}", 'sucess', {
-          input:true,
-          input:"ok",
-        })
+        Swal.fire({
+        title: 'Jogo Existente',
+        text: "O Jogo ja esta Cadastrado",
+        icon: 'error',
+        confirmButtonText: 'OK'
+        });
       </script>
   @endif
 </div>

@@ -7,7 +7,7 @@
         <h1>Editar o Jogo</h1>
         <hr>
         <br>
-        <form action="{{ route('jogos-update', ['id' => $jogos->id]) }}" method="POST">
+        <form id="meuFormulario" action="{{ route('jogos-update', ['id' => $jogos->id]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -48,5 +48,18 @@
                 </div>
             </div>
         </form>
+        <script>
+          document.getElementById("meuFormulario").addEventListener("submit", function (event) {
+              var nomeCampo = document.querySelector("input[name='nome']").value;
+              var categoriaCampo = document.querySelector("input[name='categoria']").value;
+              var anoCriacaoCampo = document.querySelector("input[name='ano_criacao']").value;
+              var valorCampo = document.querySelector("input[name='valor']").value;
+      
+              if (nomeCampo.trim() === "" || categoriaCampo.trim() === "" || anoCriacaoCampo.trim() === "" || valorCampo.trim() === "") {
+                  event.preventDefault();
+                  alert("Todos os campos devem ser preenchidos.");
+              }
+          });
+      </script>
     </div>
 @endsection

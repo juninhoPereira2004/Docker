@@ -20,12 +20,19 @@ class JogosController extends Controller
 
     public function store(Request $request)
     {
+
+        $existingGame = Jogo::where('nome', $request->input('nome'))->first();
+
+        if ($existingGame) {
+            return redirect()->route('jogos-create')->with('error', 'O jogo já está cadastrado!');
+        }
+
         $request->validate([
             'nome' => 'required|unique:jogos',
             'categoria' => 'required',
             'ano_criacao' => 'required|numeric',
             'valor' => 'required|numeric',
-        ]);
+        ],);
 
         $jogo = new Jogo();
         $jogo->nome = $request->input('nome');
@@ -53,11 +60,10 @@ class JogosController extends Controller
             'nome' => 'required|unique:jogos,nome,'.$id,
             'categoria' => 'required',
             'ano_criacao' => 'required|numeric',
-            'valor' => 'required|numeric',
+            'valor' => 'required|numeric',      
         ]);
 
         $jogo = Jogo::find($id);
-
         if (!$jogo) {
             return response()->json(['error' => 'Jogo não encontrado'], 404);
         }
@@ -70,7 +76,6 @@ class JogosController extends Controller
 
         return redirect('/jogos')->with('message', 'Editado com sucesso!');
     }
-
     public function destroy(Request $req)
     {
         Jogo::where('id', $req->id)->delete();
